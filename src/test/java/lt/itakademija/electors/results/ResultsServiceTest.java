@@ -1,6 +1,10 @@
 package lt.itakademija.electors.results;
 
 import lt.itakademija.electors.county.CountyEntity;
+import lt.itakademija.electors.district.DistrictEntity;
+import lt.itakademija.electors.district.DistrictRepository;
+import lt.itakademija.electors.results.reports.ResultCountyReport;
+import lt.itakademija.electors.results.reports.ResultDistrictReport;
 import lt.itakademija.electors.results.reports.ResultsGeneralReport;
 import org.junit.After;
 import org.junit.Before;
@@ -10,7 +14,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,7 +53,6 @@ public class ResultsServiceTest {
         Mockito.verify(resultsService).getGeneralReport();
         assertEquals(resultsService.getGeneralReport(), newResults);
 
-        System.out.println(resultsService.getGeneralReport().getDistrictsCount());
     }
 
     @Test
@@ -60,6 +67,8 @@ public class ResultsServiceTest {
 
     @Test
     public void saveCountyResults() throws Exception {
+        CountyEntity county1 = Mockito.mock(CountyEntity.class);
+        ResultCountyReport countyResults = Mockito.mock(ResultCountyReport.class);
 
     }
 
@@ -70,7 +79,16 @@ public class ResultsServiceTest {
 
     @Test
     public void getDistrictResults() throws Exception {
-
+        DistrictEntity district = Mockito.mock(DistrictEntity.class);
+        district.setId(1L);
+        Mockito.verify(district).setId(1L);
+        DistrictRepository districtRepository = Mockito.mock(DistrictRepository.class);
+        districtRepository.findById(1L);
+        Mockito.verify(districtRepository).findById(1L);
+        List<ResultDistrictReport> districtResultList = new LinkedList<>();
+        List spyList = Mockito.spy(districtResultList);
+        districtResultList.add(new ResultDistrictReport(district));
+        assertEquals(1, districtResultList.size());
     }
 
     @Test

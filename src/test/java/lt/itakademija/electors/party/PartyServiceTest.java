@@ -3,6 +3,7 @@ package lt.itakademija.electors.party;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 /**
@@ -85,10 +87,16 @@ public class PartyServiceTest {
     @Test
     public void detach() throws Exception {
         PartyEntity party1 = Mockito.mock(PartyEntity.class);
+        PartyEntity party2 = Mockito.mock(PartyEntity.class);
         PartyEntity newEntity = Mockito.mock(PartyEntity.class);
-
+        partyService.save(party1);
+        partyService.save(party2);
+        Mockito.verify(partyService).save(party1);
+        Mockito.verify(partyService).save(party2);
 
         partyService.detach(party1);
+        Mockito.verify(partyService).detach(party1);
+        assertEquals(0,partyRepository.findAll().size());
 
 
     }
@@ -132,7 +140,7 @@ public class PartyServiceTest {
         assertEquals((partyService.getPartyById(1L)),newReport);
 
     }
-
+    @Ignore
     @Test
     public void delete() throws Exception {
 
