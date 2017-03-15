@@ -97,9 +97,8 @@ public class PartyServiceTest {
     public void getNameById() throws Exception {
         PartyEntity party1 = Mockito.mock(PartyEntity.class);
         party1.setId(21L);
-
-        PartyEntity newEntity = Mockito.mock(PartyEntity.class);
-        String newName = newEntity.getName();
+        String newName = "Testing";
+        party1.setName(newName);
         partyService.getNameById(21L);
 
         when(partyService.getNameById(21L)).thenReturn(newName);
@@ -123,7 +122,9 @@ public class PartyServiceTest {
     public void getPartyById() throws Exception {
         PartyEntity party1 = Mockito.mock(PartyEntity.class);
         party1.setId(1L);
+        party1.setName("Testing");
         PartyReport newReport = Mockito.mock(PartyReport.class);
+
         partyService.getPartyById(1L);
 
         when(partyService.getPartyById(1L)).thenReturn(newReport);
